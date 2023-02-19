@@ -96,7 +96,7 @@ export default function Navbar() {
               {showMenu && <div className="absolute inset-0 bg-black/60"></div>}
               <div
                 className={`absolute bg-white w-[65vw] right-0 px-5 inset-y-0 duration-200 ease-in-out translate-x-full ${
-                  showMenu && "translate-x-0"
+                  showMenu && "translate-x-1"
                 }`}
               >
                 <div className="py-5 flex justify-end">
@@ -131,7 +131,7 @@ export default function Navbar() {
                       Login
                     </a>
                   </button>
-                  <button className="border border-mediumGray rounded-[15px] py-2 duration-200 ease-in-out hover:text-almostBlack hover:border-almostBlack">
+                  <button className="border border-mediumGray rounded-[15px] py-2 duration-200 ease-in-out hover:border-almostBlack hover:text-almostBlack">
                     <a href="#">Register</a>
                   </button>
                 </div>
@@ -181,7 +181,7 @@ function NavItem({ title, inner, active, isMobile, handleActivate }) {
       } hover:text-almostBlack md:flex-row md:items-center`}
     >
       <div className="flex items-center gap-4">
-        <div>{title} </div>
+        <div>{title}</div>
         {inner.length > 0 && (
           <>
             <div>
