@@ -2,6 +2,8 @@ import React from "react";
 import useWidth from "../hooks/useWidth";
 import { useState, useMemo } from "react";
 import Menu from "./Menu";
+import NavItem from "./NavItem";
+
 const initialNav = [
   {
     title: "Features",
@@ -95,8 +97,8 @@ export default function Navbar() {
             <Menu>
               {showMenu && <div className="absolute inset-0 bg-black/60"></div>}
               <div
-                className={`absolute bg-white w-[65vw] right-0 px-5 inset-y-0 duration-200 ease-in-out translate-x-full ${
-                  showMenu && "translate-x-1"
+                className={`absolute bg-white w-[65vw] right-0 px-5 inset-y-0 duration-200 ease-in-out ${
+                  !showMenu && "translate-x-[500px]"
                 }`}
               >
                 <div className="py-5 flex justify-end">
@@ -169,85 +171,5 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-  );
-}
-
-function NavItem({ title, inner, active, isMobile, handleActivate }) {
-  return (
-    <li
-      onClick={handleActivate}
-      className={`flex flex-col items-start gap-2 cursor-pointer relative select-none group duration-200 ease-in-out ${
-        active && inner.length > 0 && "text-almostBlack"
-      } hover:text-almostBlack md:flex-row md:items-center`}
-    >
-      <div className="flex items-center gap-4">
-        <div>{title}</div>
-        {inner.length > 0 && (
-          <>
-            <div>
-              <img
-                src={`./assets/images/${
-                  active ? "icon-arrow-up" : "icon-arrow-down"
-                }.svg`}
-                alt=""
-                className=""
-                style={{
-                  filter: `${
-                    active
-                      ? "invert(0%) sepia(2%) saturate(8%) hue-rotate(346deg) brightness(50%) contrast(102%)"
-                      : ""
-                  }`,
-                }}
-              />
-            </div>
-          </>
-        )}
-      </div>
-      {inner.length > 0 && (
-        <>
-          <div
-            className={`bg-white rounded-lg top-0 right-0 duration-200 ease-in-out min-w-[140px] text-mediumGray overflow-hidden opacity-0 pointer-events-none -translate-y-10 ${
-              active && "opacity-100 translate-y-0 md:translate-y-10"
-            }  group-even:left-0 pointer-events-auto md:shadow-xl md:absolute`}
-          >
-            <InnerItems items={inner} active={active} />
-          </div>
-        </>
-      )}
-    </li>
-  );
-}
-function InnerItems({ items, active }) {
-  return (
-    <ul className={`flex flex-col gap-3 py-3 ${!active && "hidden"} md:py-5`}>
-      {items.map(({ iconSrc, iconDesc, subTitle }) => (
-        <InnerItem
-          key={subTitle}
-          iconSrc={iconSrc}
-          iconDesc={iconDesc}
-          subTitle={subTitle}
-        />
-      ))}
-    </ul>
-  );
-}
-function InnerItem({ iconSrc, iconDesc, subTitle }) {
-  return (
-    <li className="flex gap-4 items-center px-6">
-      {iconSrc !== "" && (
-        <>
-          {" "}
-          <div className="w-[17px] text-center">
-            <img
-              src={`./assets/images/${iconSrc}`}
-              alt={iconDesc}
-              className="w-full"
-            />
-          </div>
-        </>
-      )}
-
-      <div className="whitespace-nowrap">{subTitle}</div>
-    </li>
   );
 }
