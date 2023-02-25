@@ -5,7 +5,4 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "/intro-section-with-dropdown-navigation-frontendmentor/",
   plugins: [react()],
-  server: {
-    host: true,
-  },
 });
