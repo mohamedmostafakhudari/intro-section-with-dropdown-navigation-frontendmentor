@@ -1,10 +1,103 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Navbar from "./components/Navbar";
-
+import Menu from "./components/Menu";
+import NavItem from "./components/NavItem";
+import useWidth from "./hooks/useWidth";
+const initialNav = [
+  {
+    title: "Features",
+    inner: [
+      {
+        subTitle: "Todo List",
+        iconSrc: "icon-todo.svg",
+        iconDesc: "todo",
+      },
+      {
+        subTitle: "Calendar",
+        iconSrc: "icon-calendar.svg",
+        iconDesc: "calendar",
+      },
+      {
+        subTitle: "Reminders",
+        iconSrc: "icon-reminders.svg",
+        iconDesc: "reminder",
+      },
+      {
+        subTitle: "Planning",
+        iconSrc: "icon-planning.svg",
+        iconDesc: "planning",
+      },
+    ],
+    active: false,
+  },
+  {
+    title: "Company",
+    inner: [
+      {
+        subTitle: "History",
+        iconSrc: "",
+        iconDesc: "",
+      },
+      {
+        subTitle: "Our Team",
+        iconSrc: "",
+        iconDesc: "",
+      },
+      {
+        subTitle: "Blog",
+        iconSrc: "",
+        iconDesc: "",
+      },
+    ],
+    active: false,
+  },
+  {
+    title: "Careers",
+    inner: [],
+    active: false,
+  },
+  {
+    title: "About",
+    inner: [],
+    active: false,
+  },
+];
 function App() {
+  const [showMenu, setShowMenu] = useState(false);
+  const [navItems, setNavItems] = useState(initialNav);
+  const { width } = useWidth();
+  const isMobile = useMemo(() => {
+    return width <= 768;
+  }, [width]);
+  function handleActivate(title) {
+    const newNavItems = navItems.map((item) => {
+      if (item.title === title) {
+        return {
+          ...item,
+          active: !item.active,
+        };
+      } else {
+        return item;
+      }
+    });
+    setNavItems(newNavItems);
+  }
   return (
-    <>
-      <Navbar />
+    <div className="relative container mx-auto min-h-screen">
+      <Menu
+        navItems={navItems}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        isMobile={isMobile}
+        onActivateNav={handleActivate}
+      />
+      <Navbar
+        navItems={navItems}
+        setNavItems={setNavItems}
+        setShowMenu={setShowMenu}
+        isMobile={isMobile}
+        onActivateNav={handleActivate}
+      />
       <div className="flex flex-col items-center justify-between container mx-auto  md:flex-row-reverse md:gap-16 lg:px-24 lg:gap-32">
         <div className="py-2">
           <picture className="">
@@ -54,7 +147,7 @@ function App() {
           </div>
         </div>
       </div>
-      <footer className="absolute bottom-0 bg-White w-full text-sm">
+      <footer className="absolute -bottom-14 bg-White w-full text-sm">
         <p className="py-3 text-center">
           Made With &lt;3 by{" "}
           <span className="text-mediumGray font-bold text-primary">
@@ -62,7 +155,7 @@ function App() {
           </span>
         </p>
       </footer>
-    </>
+    </div>
   );
 }
 

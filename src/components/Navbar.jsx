@@ -63,13 +63,13 @@ const initialNav = [
     active: false,
   },
 ];
-export default function Navbar() {
-  const { width } = useWidth();
-  const [showMenu, setShowMenu] = useState(false);
-  const [navItems, setNavItems] = useState(initialNav);
-  const isMobile = useMemo(() => {
-    return width <= 768;
-  }, [width]);
+export default function Navbar({
+  showMenu,
+  setShowMenu,
+  navItems,
+  setNavItems,
+  isMobile,
+}) {
   function handleActivate(title) {
     const newNavItems = navItems.map((item) => {
       if (item.title === title) {
@@ -94,51 +94,6 @@ export default function Navbar() {
             <div onClick={() => setShowMenu(true)} className="cursor-pointer">
               <img src="./assets/images/icon-menu.svg" alt="menu" />
             </div>
-            <Menu>
-              {showMenu && <div className="absolute inset-0 bg-black/60"></div>}
-              <div
-                className={`absolute bg-white w-[65vw] right-0 px-5 inset-y-0 duration-200 ease-in-out ${
-                  !showMenu && "translate-x-[500px]"
-                }`}
-              >
-                <div className="py-5 flex justify-end">
-                  <div
-                    onClick={() => setShowMenu(false)}
-                    className="cursor-pointer"
-                  >
-                    <img
-                      src="./assets/images/icon-close-menu.svg"
-                      alt="close"
-                    />
-                  </div>
-                </div>
-                <ul className="text-primary text-mediumGray flex flex-col gap-5">
-                  {navItems.map((navItem) => (
-                    <NavItem
-                      key={navItem.title}
-                      title={navItem.title}
-                      inner={navItem.inner}
-                      active={navItem.active}
-                      handleActivate={() => handleActivate(navItem.title)}
-                      isMobile={isMobile}
-                    />
-                  ))}
-                </ul>
-                <div className="flex flex-col gap-4 text-mediumGray py-4 text-primary">
-                  <button>
-                    <a
-                      href="#"
-                      className="duration-200 ease-in-out hover:text-almostBlack"
-                    >
-                      Login
-                    </a>
-                  </button>
-                  <button className="border border-mediumGray rounded-[15px] py-2 duration-200 ease-in-out hover:border-almostBlack hover:text-almostBlack">
-                    <a href="#">Register</a>
-                  </button>
-                </div>
-              </div>
-            </Menu>
           </>
         ) : (
           <>
