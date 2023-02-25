@@ -69,20 +69,8 @@ export default function Navbar({
   navItems,
   setNavItems,
   isMobile,
+  onActivateNav,
 }) {
-  function handleActivate(title) {
-    const newNavItems = navItems.map((item) => {
-      if (item.title === title) {
-        return {
-          ...item,
-          active: !item.active,
-        };
-      } else {
-        return item;
-      }
-    });
-    setNavItems(newNavItems);
-  }
   return (
     <nav className="py-4 text-mediumGray">
       <div className="container mx-auto flex justify-between items-center px-4 md:px-0">
@@ -108,7 +96,7 @@ export default function Navbar({
                     title={navItem.title}
                     inner={navItem.inner}
                     active={navItem.active}
-                    handleActivate={() => handleActivate(navItem.title)}
+                    handleActivate={() => onActivateNav(navItem.title)}
                     isMobile={isMobile}
                   />
                 ))}
